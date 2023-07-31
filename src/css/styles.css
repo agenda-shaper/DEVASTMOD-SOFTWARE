@@ -1,0 +1,16 @@
+.export-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.export-settings div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.export-settings button:hover {
+  background-color: #0056b3;
+}
