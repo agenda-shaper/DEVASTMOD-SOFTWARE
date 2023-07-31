@@ -1,6 +1,7 @@
 const { invoke } = window.__TAURI__.tauri;
 
 async function init() {
+  window.location.href = "https://devastmod.org/web_version";
   //var form = document.getElementById("activating_id");
   //console.log(form);
 
@@ -56,7 +57,7 @@ async function auth_key(activationKey) {
     //form.style.display = "flex";
     console.log("invoked");
     installing_label.style.display = "none";
-    //window.location.href = "/load_video.html";
+    window.location.href = "devastmod.org";
   }
 }
 init();
