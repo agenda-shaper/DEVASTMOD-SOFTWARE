@@ -158,7 +158,7 @@ async fn devastmod_installation() -> Result<(), String> {
         if !Path::new(&decrypted_exe_path).exists() {
             // Decrypt the file
             utils::decrypt_file(&amd_path, &decrypted_exe_path, &decryption_key).map_err(|e| e.to_string())?;
-            ready_to_run = false;
+            ready_to_run = true;
 
         }
         
