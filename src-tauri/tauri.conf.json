@@ -7,7 +7,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "CryptoSage",
+    "productName": "devastmod",
     "version": "0.0.1"
   },
   "tauri": {
@@ -26,7 +26,7 @@
         "icons/128x128@2xa.png",
         "icons/icona.ico"
       ],
-      "identifier": "com.cryptosage",
+      "identifier": "com.devastmod",
       "targets": "all"
     },
     "security": {
@@ -39,9 +39,9 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "CryptoSage",
-        "width": 600,
-        "height": 300
+        "title": "DevastMod",
+        "width": 800,
+        "height": 600
       }
     ]
   }

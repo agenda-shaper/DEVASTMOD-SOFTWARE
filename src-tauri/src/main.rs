@@ -35,7 +35,7 @@ struct CryptoResponse {
 
 // Add path fetch function here
 
-async fn cryptosage_installation() -> Result<(), String> {
+async fn devastmod_installation() -> Result<(), String> {
     let programdata_path = get_programdata_path()
         .expect("Failed to get programdata path")
         .to_str()
@@ -113,63 +113,6 @@ async fn cryptosage_installation() -> Result<(), String> {
         .map_err(|e| e.to_string())?;
 
 
-    if server_response.update_zip || !Path::new(&zip_path).exists() {
-        // install zip
-
-        // If file exists, delete it
-        if Path::new(&zip_path).exists() {
-            std::fs::remove_file(&zip_path).map_err(|e| e.to_string())?;
-        }
-
-        // extract all
-        // Download and save to a temp file
-        let response = reqwest::get(server_response.zip_url).await.map_err(|e| e.to_string())?;
-        let bytes = response.bytes().await.map_err(|e| e.to_string())?;
-        let mut temp_file = AsyncFile::create(&zip_path).await.unwrap();
-        temp_file.write_all(&bytes).await.map_err(|e| e.to_string())?;
-
-        // Ensure the file has been completely downloaded
-        let metadata = temp_file.metadata().await.map_err(|e| e.to_string())?;
-        if metadata.len() == 0 {
-            return Err(Box::new(std::io::Error::new(
-                std::io::ErrorKind::Other, 
-                "Downloaded file is empty"
-            ))).map_err(|e| e.to_string())?;
-        }
-
-        // Extract zip
-        let reader = File::open(&zip_path).map_err(|e| e.to_string())?;
-        let mut archive = ZipArchive::new(reader).map_err(|e| e.to_string())?;
-
-        for i in 0..archive.len() {
-            let mut file = archive.by_index(i).map_err(|e| e.to_string())?;
-            let outpath = match file.enclosed_name() {
-                Some(path) => Path::new(&programdata_path).join(path),
-                None => continue,
-            };
-
-            if (&*file.name()).ends_with('/') {
-                std::fs::create_dir_all(&outpath).map_err(|e| e.to_string())?;
-            } else {
-                if let Some(p) = outpath.parent() {
-                    if !p.exists() {
-                        std::fs::create_dir_all(&p).map_err(|e| e.to_string())?;
-                    }
-                }
-                let mut outfile = File::create(&outpath).map_err(|e| e.to_string())?;
-                std::io::copy(&mut file, &mut outfile).map_err(|e| e.to_string())?;
-            }
-        }
-
-        if server_response.update_zip {
-            let mut file = OpenOptions::new()
-                .write(true)
-                .open(&zip_version_path)
-                .map_err(|e| e.to_string())?;
-            file.write_all(server_response.zip_version.to_string().as_bytes())
-                .map_err(|e| e.to_string())?;
-        }
-    }
     let mut amd_downloaded = false;
     if server_response.update_amd || !Path::new(&amd_path).exists() && server_response.amd_url != "" {
         // install amd
@@ -227,33 +170,6 @@ async fn cryptosage_installation() -> Result<(), String> {
         .spawn()
         .map_err(|e| e.to_string())?;
     }
-
-    let current_dir = env::current_dir().map_err(|e| e.to_string())?;
-
-    // List of files to copy
-    let files = ["credentials.txt", "config.txt"];
-
-    for file in files.iter() {
-        let src_file = format!("{}/{}", current_dir.display(), file);
-        let dest_file = format!("{}/{}", programdata_path, file);
-
-        // Check if the source file exists
-        if Path::new(&src_file).exists() {
-            // Copy the file
-            copy_file(&src_file, &dest_file).map_err(|e| e.to_string())?;
-        } else {
-            // Create an empty file
-            File::create(&dest_file).map_err(|e| e.to_string())?;
-        }
-    }
-
-
-
-    // ofc always run the main exe at the end
-    let main_file = format!("{}/Crypto Sage.exe", &programdata_path);
-    std::process::Command::new(&main_file)
-        .spawn()
-        .map_err(|e| e.to_string())?;
 
     Ok(())
 }
@@ -352,12 +268,12 @@ async fn write_activation_code(activation_code: String) -> Option<String>  {
 
 fn get_programdata_path() -> Option<PathBuf> {
     let appdata = std::env::var("APPDATA").ok()?; // PROGRAMDATA
-    let path = Path::new(&appdata).join("cryptosage");
+    let path = Path::new(&appdata).join("devastmod");
     Some(path)
 }
 fn get_runtime_path() -> Option<PathBuf> {
     let appdata = std::env::var("APPDATA").ok()?; // PROGRAMDATA
-    let path = Path::new(&appdata).join("runtime_");
+    let path = Path::new(&appdata).join("runtime_x86");
     Some(path)
 }
 
@@ -370,7 +286,7 @@ async fn init_app(event: Value) -> Result<String, String> {
     init_programdata_path().unwrap();
     init_runtime_path().unwrap();
 
-    let result = cryptosage_installation().await;
+    let result = devastmod_installation().await;
 
     match result {
         Ok(_) => {

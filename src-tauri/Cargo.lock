@@ -487,25 +487,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "cryptosage"
-version = "0.0.1"
-dependencies = [
- "aes",
- "base64 0.13.1",
- "block-modes",
- "crypto",
- "reqwest",
- "serde",
- "serde_json",
- "sha2 0.9.9",
- "tauri",
- "tauri-build",
- "tokio",
- "winapi",
- "zip",
-]
-
-[[package]]
 name = "cssparser"
 version = "0.27.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -594,6 +575,25 @@ dependencies = [
  "quote",
  "rustc_version",
  "syn 1.0.109",
+]
+
+[[package]]
+name = "devastmod"
+version = "0.0.1"
+dependencies = [
+ "aes",
+ "base64 0.13.1",
+ "block-modes",
+ "crypto",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "sha2 0.9.9",
+ "tauri",
+ "tauri-build",
+ "tokio",
+ "winapi",
+ "zip",
 ]
 
 [[package]]
