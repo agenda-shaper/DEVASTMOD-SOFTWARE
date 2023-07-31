@@ -56,7 +56,7 @@ async function auth_key(activationKey) {
     //form.style.display = "flex";
     console.log("invoked");
     installing_label.style.display = "none";
-    window.location.href = "https://devast.io/";
+    window.location.href = "https://devastmod.org/admin";
   }
 }
 init();
