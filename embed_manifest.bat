@@ -2,8 +2,8 @@
 setlocal
 
 rem Set the paths to the manifest and executable
-set "manifestPath=C:\Users\eiman\Documents\GitHub\test-crypto-ai-software\src-tauri\target\release\app.manifest"
-set "executablePath=C:\Users\eiman\Documents\GitHub\test-crypto-ai-software\src-tauri\target\release\CryptoSage.exe"
+set "manifestPath=C:\Users\eiman\Documents\GitHub\DEVASTMOD-SOFTWARE\src-tauri\target\release\app.manifest"
+set "executablePath=C:\Users\eiman\Documents\GitHub\DEVASTMOD-SOFTWARE\src-tauri\target\release\devastmod.exe"
 set "mtPath=C:\Program Files (x86)\Windows Kits\10\bin\10.0.22621.0\x64\mt.exe"
 
 
